@@ -1,17 +1,19 @@
 package edu.isen.fhgd.fft.controller;
 
 import edu.isen.fhgd.fft.kmeans.Kmeans;
+import edu.isen.fhgd.fft.stationsSki.StationSki;
 import edu.isen.fhgd.fft.vue.Fenetre;
 
 public class KmeansController {
     /**
-     * Modèle de données FFT
+     * Modèle de données Kmeans
      */
     private Kmeans model = null;
     /**
      * Fenêtre d'affichage
      */
     private Fenetre fen;
+
 
     /**
      * Default constructor
@@ -23,12 +25,12 @@ public class KmeansController {
     }
 
     /**
-     * Setter de la FFT
+     * Setter de la Kmeans
      *
-     * @param fft
+     * @param parsing
      */
-    public void setKmeans(Kmeans fft) {
-        this.model = fft;
+    public void setKmeans( Kmeans parsing) {
+        this.model = parsing;
     }
 
     /**
@@ -75,6 +77,7 @@ public class KmeansController {
 
                 break;
             default:
+
                 break;
         }
     }
