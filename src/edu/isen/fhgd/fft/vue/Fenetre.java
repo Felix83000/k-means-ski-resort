@@ -2,6 +2,7 @@ package edu.isen.fhgd.fft.vue;
 
 import edu.isen.fhgd.fft.fft.FFT;
 import edu.isen.fhgd.fft.controller.FFTController;
+import edu.isen.fhgd.fft.kmeans.Kmeans;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -114,6 +115,10 @@ public class Fenetre extends JFrame implements Observer {
         panelSouth.add(button6);
         pane.add(panelSouth, BorderLayout.SOUTH);
         this.setVisible(true);
+
+        Kmeans kmaens= new Kmeans();
+        kmaens.parse();
+        LOGGER.info(kmaens.getModel().getNomstation(0)+" : easy : "+String.valueOf(kmaens.getModel().getFacile(0)));
     }
 
     /**
