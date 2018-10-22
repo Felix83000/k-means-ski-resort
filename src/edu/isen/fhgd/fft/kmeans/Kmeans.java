@@ -15,8 +15,6 @@ public class Kmeans extends Observable{
 
     // Creation du model Kmeans
 
-
-
     private StationSki model = new StationSki() ;
 
     public Kmeans() {
@@ -27,7 +25,7 @@ public class Kmeans extends Observable{
         return model;
     }
 
-    public void parse( )
+    public void parse()
     {
         // Parsing des données pour inserer le model de Kmeans
         try {

@@ -1,23 +1,5 @@
 package edu.isen.fhgd.fft.stationsSki;
 
-
-import edu.isen.fhgd.fft.kmeans.Kmeans;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.w3c.dom.Document;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-
-
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList ;
-
-
 public class StationSki  {
 
     private int taille_previsions = 300 ;
@@ -30,8 +12,6 @@ public class StationSki  {
     private float intermedaire[] = new float[taille_previsions] ;
     private float difficile[] = new float[taille_previsions] ;
     private float expert[] = new float[taille_previsions] ;
-
-
 
     // ------------- GET -----------------------------------------
 
@@ -86,5 +66,4 @@ public class StationSki  {
     public void setExpert(float expert ,  int i  ) {
         this.expert[i] = expert;
     }
-
 }

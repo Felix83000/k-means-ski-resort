@@ -88,11 +88,6 @@ public class parseur_ski {
                     Logger.debug(" intermédiare :"+ intermediaire);
                 }
 
-
-
-
-
-
                 Element Xmldificile = (Element) document.getElementsByTagName("Difficult").item(index);
                 // Verification si la données est vide
                 if(Xmldificile.getTextContent().isEmpty())
@@ -107,23 +102,16 @@ public class parseur_ski {
 
                     Logger.debug(" dificile :"+ dificile);
                 }
-
-
-
-                // log
-
-                Logger.debug("index = "+ index);
-
             }
 
             Logger.info("Fin du parsing !!");
+
 
 
         } catch (Exception e) {
 
             Logger.error("Erreur de récupération des données !!");
             e.printStackTrace();
-
 
         }
     }
