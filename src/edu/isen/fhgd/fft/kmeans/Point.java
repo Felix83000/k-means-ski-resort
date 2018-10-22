@@ -2,15 +2,19 @@ package edu.isen.fhgd.fft.kmeans;
 
 public class Point {
 
-    private int length = 2;
+    protected int length = 2;
 
     private float[] coords = new float[length];
 
     //Cluster
+    Cluster cluster ;
 
     public Point(float easy, float difficult) {
         this.coords[0] = easy;
         this.coords[1] = difficult;
+    }
+
+    public Point() {
     }
 
     public float getCoords(int i) {
@@ -28,5 +32,13 @@ public class Point {
             sum += Math.pow(coords[i] - o.coords[i], 2);
         dist = Math.sqrt(sum);
         return  dist;
+    }
+
+    public Cluster getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(Cluster cluster) {
+        this.cluster = cluster;
     }
 }
