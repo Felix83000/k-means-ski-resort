@@ -1,8 +1,9 @@
 package edu.isen.fhgd.fft.vue;
 
-import edu.isen.fhgd.fft.fft.FFT;
-import edu.isen.fhgd.fft.controller.FFTController;
+import edu.isen.fhgd.fft.controller.KmeansController;
+import edu.isen.fhgd.fft.kmeans.Cluster;
 import edu.isen.fhgd.fft.kmeans.Kmeans;
+import edu.isen.fhgd.fft.kmeans.Point;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -18,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -33,7 +36,7 @@ public class Fenetre extends JFrame implements Observer {
     /**
      * Contrôleur de l'application
      */
-    private FFTController controller;
+    private KmeansController controller;
     /**
      * Choix d'action à effectuer
      */
@@ -50,22 +53,22 @@ public class Fenetre extends JFrame implements Observer {
      *
      * @param controller Contrôleur de l'application
      */
-    public Fenetre(FFTController controller) {
-        this.setTitle("Projet Java-Maths");
-        this.setSize(800, 800);
+    public Fenetre(KmeansController controller) {
+        this.setTitle("Projet RNA - K-means");
+        this.setSize(900, 900);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.controller = controller;
         this.choixActuel = 0;
 
         graphique = ChartFactory.createXYLineChart(
-                "Spectre", "N", "Magnitude",
+                "Stations de ski", "km de piste débutantes","km de piste expérimentés",
                 null, PlotOrientation.VERTICAL, true, true, false);
         plotPanel = new ChartPanel(graphique) {
 
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(300, 300);
+                return new Dimension(700, 700);
             }
         };
         BorderLayout layout = new BorderLayout();
@@ -74,45 +77,15 @@ public class Fenetre extends JFrame implements Observer {
 
         plotPanel.setMouseWheelEnabled(true);
         pane.add(plotPanel, BorderLayout.NORTH);
-        JButton button = new JButton("Sinus Réel");
+        JButton button = new JButton("K-means Algorithm");
         button.addActionListener(actionEvent -> {
             this.choixActuel = 1;
             this.controller.notifyAction(choixActuel);
         });
-        JButton button2 = new JButton("Exponentielle Complexe");
-        button2.addActionListener(actionEvent -> {
-            this.choixActuel = 2;
-            this.controller.notifyAction(choixActuel);
-        });
-        JButton button3 = new JButton("Cosinus réel");
-        button3.addActionListener(actionEvent -> {
-            this.choixActuel = 3;
-            this.controller.notifyAction(choixActuel);
-        });
-        JButton button4 = new JButton("Exponentielle réelle");
-        button4.addActionListener(actionEvent -> {
-            this.choixActuel = 4;
-            this.controller.notifyAction(choixActuel);
-        });
-        JButton button5 = new JButton("Constante complexe");
-        button5.addActionListener(actionEvent -> {
-            this.choixActuel = 5;
-            this.controller.notifyAction(choixActuel);
-        });
-        JButton button6 = new JButton("Inverse FFT (CONSTANTE)");
-        button6.addActionListener(actionEvent -> {
-            this.choixActuel = 6;
-            this.controller.notifyAction(choixActuel);
-        });
 
-        GridLayout grid = new GridLayout(2, 3);
+        GridLayout grid = new GridLayout(1, 1);
         JPanel panelSouth = new JPanel(grid);
         panelSouth.add(button);
-        panelSouth.add(button2);
-        panelSouth.add(button3);
-        panelSouth.add(button4);
-        panelSouth.add(button5);
-        panelSouth.add(button6);
         pane.add(panelSouth, BorderLayout.SOUTH);
         this.setVisible(true);
 
@@ -130,18 +103,65 @@ public class Fenetre extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         LOGGER.debug("Mise à jour de la vue");
-        if (o instanceof FFT) {
+        if (o instanceof Kmeans) {
             LOGGER.debug("Affichage des valeurs");
-            FFT fft = (FFT) o;
-            XYSeries serieDePoints = new XYSeries("FFT");
-            // Remplissage série de points
-            for (int i = 0; i < fft.getTailleP2(); i++) {
-                serieDePoints.add(i, fft.getSortie(i).module());
+            Kmeans kmeans = (Kmeans) o;
+
+            ArrayList<Cluster> Cluster = kmeans.getCluster() ;
+
+            Cluster.forEach(cluster -> cluster.getStatistique());
+
+            double error = 0 ;
+            int nb = 0, count;
+            XYSeries serieDePoints = new XYSeries("Petites Stations");
+            XYSeries serieDePoints1 = new XYSeries("Grandes Stations");
+            XYSeries serieDePoints2 = new XYSeries("Très Grandes Stations");
+            XYSeries baricentres = new XYSeries("Baricentres");
+
+            for(Cluster cluster:Cluster)
+            {
+                if (cluster.getPointsDuCluster().size() > 0 ){
+                    nb++ ;
+                    error += cluster.getMoyDistance();
+                    LOGGER.debug("Cluster : "+ nb);
+                    baricentres.add(cluster.getBarycentre().getCoords(0),cluster.getBarycentre().getCoords(1));
+                    count = 0;
+                    for (Point point: cluster.getPointsDuCluster())
+                    {
+                        // En fonction du numéro du cluster on affiche les points dans différentes séries
+                        switch (nb)
+                        {
+                            case 1:
+                                // Remplissage série de points
+                                serieDePoints.add(point.getCoords(0),point.getCoords(1));
+                                break;
+                            case 2:
+                                // Remplissage série de points
+                                serieDePoints2.add(point.getCoords(0),point.getCoords(1));
+                                break;
+                            case 3:
+                                // Remplissage série de points
+                                serieDePoints1.add(point.getCoords(0),point.getCoords(1));
+                                break;
+                        }
+                        count+=1;
+                        LOGGER.debug("Station"+count+" : "+point.getCoords(0)+" , "+point.getCoords(1));
+                    }
+                }
             }
-            XYDataset xyDataset = new XYSeriesCollection(serieDePoints);
+
+            error = error/(2*250);
+            LOGGER.debug("gobal error= " + String.format(Locale.ENGLISH, "%.2f", (error*100)) + " % ");
+
+            XYDataset xyDataset = new XYSeriesCollection();
+            ((XYSeriesCollection) xyDataset).addSeries(baricentres);
+            ((XYSeriesCollection) xyDataset).addSeries(serieDePoints);
+            ((XYSeriesCollection) xyDataset).addSeries(serieDePoints1);
+            ((XYSeriesCollection) xyDataset).addSeries(serieDePoints2);
+
 
             graphique = ChartFactory.createXYLineChart(
-                    "FFT", "N", "Magnitude",
+                    "Stations de ski", "km de piste débutantes","km de piste expérimentés",
                     xyDataset, PlotOrientation.VERTICAL, true, false, false);
             XYPlot plot = graphique.getXYPlot();
             XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(false, true);
