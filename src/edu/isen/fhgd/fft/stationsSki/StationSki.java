@@ -11,7 +11,8 @@ public class StationSki  {
     private float facile[] = new float[taille_previsions] ;
     private float intermedaire[] = new float[taille_previsions] ;
     private float difficile[] = new float[taille_previsions] ;
-    private float expert[] = new float[taille_previsions] ;
+
+    private int length ;
 
     // ------------- GET -----------------------------------------
 
@@ -36,8 +37,8 @@ public class StationSki  {
         return difficile[i];
     }
 
-    public float getExpert(int i) {
-        return expert[i];
+    public int getLength() {
+        return length;
     }
 
     //------------- SET -----------------------------------------
@@ -63,7 +64,7 @@ public class StationSki  {
         this.difficile[i] = difficile;
     }
 
-    public void setExpert(float expert ,  int i  ) {
-        this.expert[i] = expert;
+    public void setLength(int length) {
+        this.length = length;
     }
 }

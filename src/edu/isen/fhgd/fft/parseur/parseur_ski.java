@@ -101,6 +101,8 @@ public class parseur_ski {
                     model_parsing.setDifficile( dificile , index);
 
                     Logger.debug(" dificile :"+ dificile);
+
+                    model_parsing.setLength(index);
                 }
             }
 

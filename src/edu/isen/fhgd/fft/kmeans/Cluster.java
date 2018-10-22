@@ -65,13 +65,13 @@ public class Cluster {
 
             for (int i = 0; i < dimmension; i++) {
                 tabIndice[0] = i;
+
                 double somme = pointDuCluster.stream().parallel().mapToDouble(d -> d.getCoords(tabIndice[0])).sum();
                 float moyenne = (float) somme / (float) nombreElement;
                 if (barycentre.getCoords(i) != moyenne) {
                     barycentre.setCoords(i, (float) somme / (float) nombreElement);
-                    somme = pointDuCluster.stream().parallel().mapToDouble(d -> d.getCoords(tabIndice[0])).sum();
-                    barycentre.setCoords(i, (float) somme / (float) nombreElement);
                 }
+
             }
         }
     }
@@ -116,5 +116,11 @@ public class Cluster {
         this.barycentre = barycentre;
     }
 
+    public ArrayList<Point> getPointDuCluster() {
+        return pointDuCluster;
+    }
 
+    public float getMoyDistance() {
+        return moyDistance;
+    }
 }

@@ -1,5 +1,7 @@
 package edu.isen.fhgd.fft.kmeans;
 
+import java.util.Arrays;
+
 public class Point {
 
     protected int length = 2;
@@ -32,6 +34,13 @@ public class Point {
             sum += Math.pow(coords[i] - o.coords[i], 2);
         dist = Math.sqrt(sum);
         return  dist;
+    }
+
+   protected Point clonee() {
+        Point copy = new Point();
+        copy.setCoords(0 , getCoords(0));
+        copy.setCoords(1, getCoords(1));
+        return copy;
     }
 
     public Cluster getCluster() {
