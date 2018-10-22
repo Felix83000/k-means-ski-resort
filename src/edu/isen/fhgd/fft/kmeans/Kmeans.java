@@ -41,6 +41,11 @@ public class Kmeans extends Observable{
         this.notifyObservers();
     }
 
+    public void Kmeans_algorithm()
+    {
+
+    }
+
     @Override
     public void notifyObservers() {
         LOGGER.debug("Notification de fin de calcul");
