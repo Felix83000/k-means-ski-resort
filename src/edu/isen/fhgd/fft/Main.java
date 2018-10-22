@@ -16,7 +16,6 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        /*
         // Création d'un tableau vide pour initialisé l'objet FFT
         float sinus[] = new float[0];
         FFT fft = new FFT(2, sinus);
@@ -28,25 +27,5 @@ public class Main {
         fft.addObserver(fen);
         controller.setFft(fft);
         controller.setFen(fen);
-        */
-
-        // Creation du model Kmeans
-
-         Kmeans model = new Kmeans() ;
-
-        //Création du controller  Kmeans
-
-        KmeansController controller = new KmeansController(model) ;
-
-        // Parsing des données pour inserer le model de Kmeans
-        try {
-            LOGGER.info("Parsing !!");
-            controller.setKmeans(new StationSki().getModel_parsing());
-
-        } catch (ParserConfigurationException e) {
-            LOGGER.error("erreur d'initialisation du model pour Kmeans");
-            e.printStackTrace();
-        }
-
     }
 }
