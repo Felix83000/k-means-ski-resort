@@ -1,12 +1,11 @@
 package edu.isen.fhgd.fft.kmeans;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Cluster {
 
     // liste des point appartenant au cluster
-    private ArrayList<Point> pointDuCluster;
+    private ArrayList<Point> pointsDuCluster;
 
     // data qui représente le barycentre du cluster
     private Point barycentre;
@@ -28,7 +27,7 @@ public class Cluster {
 
     // initialisation du cluster
     public Cluster() {
-        pointDuCluster = new ArrayList<Point>();
+        pointsDuCluster = new ArrayList<Point>();
         barycentre = new Point();
 
 
@@ -43,30 +42,29 @@ public class Cluster {
 
     }
 
-
     // ajout d'un point au cluster
     public void addPoint(Point point) {
-        pointDuCluster.add(point);
+        pointsDuCluster.add(point);
         point.setCluster(this);
     }
 
     // détache un point du cluster
     public void removePoint(Point point) {
-        pointDuCluster.remove(point);
+        pointsDuCluster.remove(point);
         point.setCluster(null);
     }
 
     // recalcule le centre du cluster
     public void CalculBaycentre() {
-        int nombreElement = pointDuCluster.size();
+        int nombreElement = pointsDuCluster.size();
         if (nombreElement > 0) {
-            int dimmension = pointDuCluster.get(0).length;
+            int dimmension = pointsDuCluster.get(0).length;
             int[] tabIndice = {0};
 
             for (int i = 0; i < dimmension; i++) {
                 tabIndice[0] = i;
 
-                double somme = pointDuCluster.stream().parallel().mapToDouble(d -> d.getCoords(tabIndice[0])).sum();
+                double somme = pointsDuCluster.stream().parallel().mapToDouble(d -> d.getCoords(tabIndice[0])).sum();
                 float moyenne = (float) somme / (float) nombreElement;
                 if (barycentre.getCoords(i) != moyenne) {
                     barycentre.setCoords(i, (float) somme / (float) nombreElement);
@@ -83,7 +81,7 @@ public class Cluster {
         float sommeDistance = 0 ;
         minDistance = -1 ;
         maxDistance = -1 ;
-        for (Point point:pointDuCluster)
+        for (Point point: pointsDuCluster)
         {
             float distance = (float) point.distance(barycentre);
             if(distance<minDistance)
@@ -95,9 +93,9 @@ public class Cluster {
             }
             sommeDistance = sommeDistance + distance ;
         }
-        if(pointDuCluster.size()>0)
+        if(pointsDuCluster.size()>0)
         {
-            moyDistance = sommeDistance/pointDuCluster.size();
+            moyDistance = sommeDistance/ pointsDuCluster.size();
         }
     }
 
@@ -116,8 +114,8 @@ public class Cluster {
         this.barycentre = barycentre;
     }
 
-    public ArrayList<Point> getPointDuCluster() {
-        return pointDuCluster;
+    public ArrayList<Point> getPointsDuCluster() {
+        return pointsDuCluster;
     }
 
     public float getMoyDistance() {

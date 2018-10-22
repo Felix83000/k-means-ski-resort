@@ -1,6 +1,5 @@
 package edu.isen.fhgd.fft.kmeans;
 
-import edu.isen.fhgd.fft.controller.KmeansController;
 import edu.isen.fhgd.fft.parseur.parseur_ski;
 import edu.isen.fhgd.fft.stationsSki.StationSki;
 import org.slf4j.Logger;
@@ -43,7 +42,6 @@ public class Kmeans extends Observable{
             LOGGER.error("erreur d'initialisation du model pour Kmeans");
             e.printStackTrace();
         }
-        this.notifyObservers();
     }
 
     public void initialisation (int nombreCluster)
@@ -103,6 +101,7 @@ public class Kmeans extends Observable{
                 }
             }
         }
+        this.notifyObservers();
     }
 
     private static Cluster searchCluster(Point data) {

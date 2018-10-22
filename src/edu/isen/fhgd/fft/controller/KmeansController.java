@@ -1,14 +1,13 @@
 package edu.isen.fhgd.fft.controller;
 
 import edu.isen.fhgd.fft.kmeans.Kmeans;
-import edu.isen.fhgd.fft.stationsSki.StationSki;
 import edu.isen.fhgd.fft.vue.Fenetre;
 
 public class KmeansController {
     /**
      * Modèle de données Kmeans
      */
-    private Kmeans model = null;
+    private Kmeans model = new Kmeans();
     /**
      * Fenêtre d'affichage
      */
@@ -27,10 +26,10 @@ public class KmeansController {
     /**
      * Setter de la Kmeans
      *
-     * @param parsing
+     * @param kmeans
      */
-    public void setKmeans( Kmeans parsing) {
-        this.model = parsing;
+    public void setKmeans( Kmeans kmeans) {
+        this.model = kmeans;
     }
 
     /**
@@ -59,22 +58,9 @@ public class KmeansController {
     public void notifyAction(int choix) {
         switch (choix) {
             case 1:
-
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            case 6:
-
+                this.model.parse();
+                this.model.initialisation(3);
+                this.model.kMeanCluster();
                 break;
             default:
 

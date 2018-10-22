@@ -1,7 +1,6 @@
 package edu.isen.fhgd.fft;
 
-import edu.isen.fhgd.fft.controller.FFTController;
-import edu.isen.fhgd.fft.fft.FFT;
+import edu.isen.fhgd.fft.controller.KmeansController;
 import edu.isen.fhgd.fft.kmeans.Cluster;
 import edu.isen.fhgd.fft.kmeans.Kmeans;
 import edu.isen.fhgd.fft.kmeans.Point;
@@ -18,21 +17,21 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-     /*
+
         // Création d'un tableau vide pour initialisé l'objet FFT
         float sinus[] = new float[0];
-        FFT fft = new FFT(2, sinus);
+        Kmeans kmeans = new Kmeans();
         // Création du contrôleur
-        FFTController controller = new FFTController(fft);
+        KmeansController controller = new KmeansController(kmeans);
         // Création de la fenêtre
         Fenetre fen = new Fenetre(controller);
         // Ajout de l'observer
-        fft.addObserver(fen);
-        controller.setFft(fft);
+        kmeans.addObserver(fen);
+        controller.setKmeans(kmeans);
         controller.setFen(fen);
-    */
 
-        Kmeans kmaens= new Kmeans();
+
+        /*Kmeans kmaens= new Kmeans();
         kmaens.parse();
 
          kmaens.initialisation(3);
@@ -45,17 +44,27 @@ public class Main {
 
         double error = 0 ;
         int nb = 0 ;
+         ArrayList<Point> Cluster1;
+         ArrayList<Point> Cluster2;
+         ArrayList<Point> Cluster3;
 
         for(Cluster cluster:Cluster)
         {
-            if (cluster.getPointDuCluster().size() >0 ){
-
+            if (cluster.getPointsDuCluster().size() > 0 ){
                 System.out.println(cluster);
                 nb++ ;
                 error += cluster.getMoyDistance();
+                System.out.println("Cluster : "+ nb);
+                for (Point point: cluster.getPointsDuCluster())
+                {
+                    System.out.println("Point : "+point.getCoords(0)+" , "+point.getCoords(1));
+                }
+                Cluster1 = cluster.getPointsDuCluster();
             }
         }
+
         error = error/(2*250);
         System.out.println("gobal error= " + String.format(Locale.ENGLISH, "%.2f", (error*100)) + " % ");
+        */
     }
 }
