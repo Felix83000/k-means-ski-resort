@@ -1,6 +1,6 @@
 package edu.isen.fhgd.fft.stationsSki;
 
-import edu.isen.fhgd.fft.controller.KmeansController;
+
 import edu.isen.fhgd.fft.kmeans.Kmeans;
 
 import org.slf4j.Logger;
@@ -13,128 +13,78 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 
-import org.w3c.dom.Document;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList ;
-import  org.w3c.dom.Node;
 
 
 public class StationSki  {
 
-    static Logger Logger = LoggerFactory.getLogger(StationSki.class) ;
+    private int taille_previsions = 300 ;
 
-    private Kmeans model_parsing = new Kmeans() ;
+    //----------------- DATA --------------------------------------
 
-  public StationSki() { }
-
-
-    private void getInfoSki() throws ParserConfigurationException{
-
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = null;
-        try {
-
-            db = dbf.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            Logger.error("erreur dbf.newDocumentBuilder !!");
-            e.printStackTrace();
-        }
-
-        try {
-            Document document = db.parse("./src/edu/isen/fhgd/fft/dataXml/ski.xml");
-            document.getDocumentElement().normalize();
-
-
-            // insertion des noms de stations
-            NodeList listeStations = document.getElementsByTagName("row") ;
-            for( int index = 0 ; index < listeStations.getLength() ; index++ ) {
-
-                Element XmlStation = (Element) document.getElementsByTagName("Resort").item(index);
-                String stations = XmlStation.getTextContent();
-                model_parsing.setNomstation(stations, index);
-
-                //log
-                Logger.debug(" Nomstations :"+ stations);
-
-
-                Element Xmlfacile = (Element) document.getElementsByTagName("Easy").item(index);
-                // Verification si la données est vide
-                if(Xmlfacile.getTextContent().isEmpty())
-                {
-                    float facile = 0 ;
-                    model_parsing.setFacile(facile , index);
-
-                    Logger.debug(" facile :"+ facile);
-                }else {
-                    float facile = Float.parseFloat((Xmlfacile.getTextContent()));
-                    model_parsing.setFacile(facile , index);
-
-                    Logger.debug(" facile :"+ facile);
-                }
-
-
-                Element Xmlintermediare = (Element) document.getElementsByTagName("Intermediate").item(index);
-                // Verification si la données est vide
-                if(Xmlintermediare.getTextContent().isEmpty())
-                {
-                    float intermediaire = 0 ;
-                    model_parsing.setFacile( intermediaire, index);
-
-                    Logger.debug(" intermédiare :"+ intermediaire);
-                }else {
-                    float intermediaire = Float.parseFloat((Xmlintermediare.getTextContent()));
-                    model_parsing.setFacile( intermediaire , index);
-
-                    Logger.debug(" intermédiare :"+ intermediaire);
-                }
+    private String Nomstation[] = new String[taille_previsions];
+    private float altitude[] = new float[taille_previsions] ;
+    private float facile[] = new float[taille_previsions] ;
+    private float intermedaire[] = new float[taille_previsions] ;
+    private float difficile[] = new float[taille_previsions] ;
+    private float expert[] = new float[taille_previsions] ;
 
 
 
+    // ------------- GET -----------------------------------------
 
 
-
-                Element Xmldificile = (Element) document.getElementsByTagName("Difficult").item(index);
-                // Verification si la données est vide
-                if(Xmldificile.getTextContent().isEmpty())
-                {
-                    float dificile = 0 ;
-                    model_parsing.setFacile( dificile, index);
-
-                    Logger.debug(" dificile :"+ dificile);
-                }else {
-                    float dificile = Float.parseFloat((Xmldificile.getTextContent()));
-                    model_parsing.setFacile( dificile , index);
-
-                    Logger.debug(" dificile :"+ dificile);
-                }
-
-
-
-                // log
-
-
-
-            }
-
-         Logger.info("Fin du parsing !!");
-
-
-        } catch (Exception e) {
-
-            Logger.error("Erreur de récupération des données !!");
-            e.printStackTrace();
-
-
-        }
+    public String getNomstation(int i ) {
+        return Nomstation[i];
     }
 
-    // fonction de réxupérattion des données parsée
-    public Kmeans getModel_parsing() throws ParserConfigurationException {
+    public float getAltitude(int i) {
+        return  altitude[i];
+    }
 
-        Logger.info("Lancement du parsing !!");
-        getInfoSki();
+    public float getFacile(int i ) {
+        return facile[i];
+    }
 
-        return model_parsing;
+    public float getIntermedaire(int i ) {
+        return intermedaire[i];
+    }
+
+    public float getDifficile(int i) {
+        return difficile[i];
+    }
+
+    public float getExpert(int i) {
+        return expert[i];
+    }
+
+    //------------- SET -----------------------------------------
+
+
+    public void setNomstation(String nomstation , int i) {
+        this.Nomstation[i] = nomstation;
+    }
+
+    public void setAltitude( float altitude , int i) {
+        this.altitude[i] = altitude;
+    }
+
+    public void setFacile(float facile , int i ) {
+        this.facile[i] = facile;
+    }
+
+    public void setIntermedaire(float intermedaire , int i) {
+        this.intermedaire[i] = intermedaire;
+    }
+
+    public void setDifficile(float difficile  ,int i) {
+        this.difficile[i] = difficile;
+    }
+
+    public void setExpert(float expert ,  int i  ) {
+        this.expert[i] = expert;
     }
 
 }
