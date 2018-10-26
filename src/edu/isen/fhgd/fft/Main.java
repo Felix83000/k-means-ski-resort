@@ -61,10 +61,18 @@ public class Main {
                 }
                 Cluster1 = cluster.getPointsDuCluster();
             }
+
+            System.out.println("barycentre : x=" + cluster.getBarycentre().getCoords(0) +" y=" +cluster.getBarycentre().getCoords(1));
+
+            System.out.println("Moyenne distance :" + cluster.getMoyDistance());
+
         }
 
         error = error/(2*250);
         System.out.println("gobal error= " + String.format(Locale.ENGLISH, "%.2f", (error*100)) + " % ");
         */
     }
+
+
+
 }

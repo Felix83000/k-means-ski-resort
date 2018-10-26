@@ -62,7 +62,7 @@ public class Fenetre extends JFrame implements Observer {
         this.choixActuel = 0;
 
         graphique = ChartFactory.createXYLineChart(
-                "Stations de ski", "km de piste débutantes","km de piste expérimentés",
+                "Stations de ski", "km de pistes débutantes","km de pistes expérimentés",
                 null, PlotOrientation.VERTICAL, true, true, false);
         plotPanel = new ChartPanel(graphique) {
 
@@ -161,7 +161,7 @@ public class Fenetre extends JFrame implements Observer {
 
 
             graphique = ChartFactory.createXYLineChart(
-                    "Stations de ski", "km de piste débutantes","km de piste expérimentés",
+                    "Stations de ski", "km de pistes débutantes","km de pistes expérimentés",
                     xyDataset, PlotOrientation.VERTICAL, true, false, false);
             XYPlot plot = graphique.getXYPlot();
             XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(false, true);

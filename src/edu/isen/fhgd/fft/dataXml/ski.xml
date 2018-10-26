@@ -2288,7 +2288,7 @@
     <Child>40</Child>
     <Access>4.0</Access>
   </row>
-  <row>
+  <!--- <row>
     <Resort>les-3-vallees-val-thorensles-menuiresmeribelcourchevel</Resort>
     <Country>France</Country>
     <State>
@@ -2303,7 +2303,7 @@
     <Youth>0</Youth>
     <Child>48.80</Child>
     <Access>4.0</Access>
-  </row>
+  </row>  -->
   <row>
     <Resort>les-7-laux-prapoutelle-pleynetpipay</Resort>
     <Country>France</Country>
